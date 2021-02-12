@@ -9,6 +9,9 @@ import Camera from './Camera';
 import {setGL} from './globals';
 import ShaderProgram, {Shader} from './rendering/gl/ShaderProgram';
 
+// HW0
+import Cube from './geometry/Cube';
+
 // Define an object with application parameters and button callbacks
 // This will be referred to by dat.GUI's functions that add GUI elements.
 const controls = {
@@ -22,6 +25,7 @@ const controls = {
 let icosphere: Icosphere;
 let square: Square;
 let prevTesselations: number = 5;
+let cube: Cube;
 
 function loadScene() {
   // Construct a icosphere with center = (0, 0, 0), radius = 1, subdivision = controls.tesselations (5 by default)
@@ -30,6 +34,9 @@ function loadScene() {
   // Construct a square with center = (0, 0, 0)
   square = new Square(vec3.fromValues(0, 0, 0));
   square.create();
+  // Contruct a cube with center = (0, 0, 0)
+  cube = new Cube(vec3.fromValues(0, 0, 0));
+  cube.create();
 }
 
 function main() {
@@ -86,8 +93,8 @@ function main() {
       icosphere.create();
     }
     renderer.render(camera, lambert, [
-      //icosphere,
-      square,
+      icosphere,
+      cube,
     ]);
     stats.end();
 
