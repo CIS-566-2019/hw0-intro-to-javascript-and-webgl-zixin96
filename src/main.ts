@@ -2,6 +2,7 @@ import {vec3} from 'gl-matrix';
 import * as Stats from 'stats-js';
 import * as DAT from 'dat-gui';
 import Icosphere from './geometry/Icosphere';
+// no curly braces are used in this import 
 import Square from './geometry/Square';
 import OpenGLRenderer from './rendering/gl/OpenGLRenderer';
 import Camera from './Camera';
@@ -15,13 +16,18 @@ const controls = {
   'Load Scene': loadScene, // A function pointer, essentially
 };
 
+// Variable declaration in Typescript
+// let VAR_NAME : TYPE = VALUE; 
+// let VAR_NAME : TYPE;
 let icosphere: Icosphere;
 let square: Square;
 let prevTesselations: number = 5;
 
 function loadScene() {
+  // Construct a icosphere with center = (0, 0, 0), radius = 1, subdivision = controls.tesselations (5 by default)
   icosphere = new Icosphere(vec3.fromValues(0, 0, 0), 1, controls.tesselations);
   icosphere.create();
+  // Construct a square with center = (0, 0, 0)
   square = new Square(vec3.fromValues(0, 0, 0));
   square.create();
 }
@@ -53,12 +59,15 @@ function main() {
   // Initial call to load scene
   loadScene();
 
+  // Create a camera at (0, 0, 5), targeting at (0, 0, 0)
   const camera = new Camera(vec3.fromValues(0, 0, 5), vec3.fromValues(0, 0, 0));
 
   const renderer = new OpenGLRenderer(canvas);
   renderer.setClearColor(0.2, 0.2, 0.2, 1);
   gl.enable(gl.DEPTH_TEST);
 
+  // Create, atttach, and link vs and fs into a shader program
+  // and populate handles for vertex attributes and uniform variables
   const lambert = new ShaderProgram([
     new Shader(gl.VERTEX_SHADER, require('./shaders/lambert-vert.glsl')),
     new Shader(gl.FRAGMENT_SHADER, require('./shaders/lambert-frag.glsl')),
@@ -77,8 +86,8 @@ function main() {
       icosphere.create();
     }
     renderer.render(camera, lambert, [
-      icosphere,
-      // square,
+      //icosphere,
+      square,
     ]);
     stats.end();
 

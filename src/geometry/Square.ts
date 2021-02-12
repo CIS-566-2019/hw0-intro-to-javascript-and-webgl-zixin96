@@ -44,4 +44,5 @@ class Square extends Drawable {
   }
 };
 
+// Using export default will be the export if curly braces are not used in the import.
 export default Square;
