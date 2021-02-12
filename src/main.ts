@@ -14,9 +14,10 @@ import Cube from './geometry/Cube';
 
 // Define an object with application parameters and button callbacks
 // This will be referred to by dat.GUI's functions that add GUI elements.
-const controls = {
+export const controls = {
   tesselations: 5,
   'Load Scene': loadScene, // A function pointer, essentially
+  uColorFS: [ 0, 128, 255, 1.0 ],
 };
 
 // Variable declaration in Typescript
@@ -52,6 +53,8 @@ function main() {
   const gui = new DAT.GUI();
   gui.add(controls, 'tesselations', 0, 8).step(1);
   gui.add(controls, 'Load Scene');
+  gui.addColor(controls, 'uColorFS');
+
 
   // get canvas and webgl context
   const canvas = <HTMLCanvasElement> document.getElementById('canvas');
@@ -93,8 +96,7 @@ function main() {
       icosphere.create();
     }
     renderer.render(camera, lambert, [
-      icosphere,
-      cube,
+      icosphere
     ]);
     stats.end();
 
